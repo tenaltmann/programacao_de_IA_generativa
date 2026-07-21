@@ -52,3 +52,12 @@ df["grupos_encontrados"] = grupos
 
 print("Pronto, o computador separou as 60 vtrs em 2 grupos")
 print(df["grupos_encontrados"].value_counts().to_string())
+
+
+## Passo 6 - Ver o que o computador encontrou
+
+
+perfil = df.groupby("grupos_encontrados")[colunas_sem_resposta].mean().round(1)
+print("Perfil médio de cada grupo: ")
+print()
+print(perfil.to_string())
