@@ -80,6 +80,28 @@ for g in [0, 1]:
 
   plt.xlabel("km rodado")
   plt.ylabel("idade (anos)")
+
+
+
+## Passo 8 - Comparando com os dados reais
+
+
+comparacao = pd.crosstab(
+    df["grupo_encontrado"],
+    df["precisa_manutencao"],
+    margins=True
+)
+
+comparacao.columns = ["Não precisou (0)", "Precisou (1)", "Total"]
+comparacao.index = ["Grupo 0", "Grupo 1", "Total"]
+
+print("Comparação — grupos encontrados vs resposta real:")
+print()
+print(comparacao.to_string())
+print()
+print("O computador NÃO viu a coluna 'precisa_manutencao' em nenhum momento.")
+print("Mesmo assim, os grupos que ele encontrou se parecem com a realidade?")
+
   plt.title("Grupos encontrados pelo computador(não supervisionado)")
   plt.legend()
   plt.show()
