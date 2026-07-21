@@ -51,3 +51,12 @@ x_treino, x_teste, y_treino, y_teste = train_test_split(
 
 print("Viatura para Treino:", len(x_treino))
 print("Viatura guardadas para teste :", len(x_teste))
+
+
+# Passo 5 - Treinar o modelo
+
+modelo = DecisionTreeClassifier(max_depth=4, random_state=42)
+
+#.fit é o momento do treinamento de verdade
+modelo.fit(x_treino, y_treino)
+print("modelo Treinado")
