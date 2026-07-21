@@ -70,3 +70,25 @@ acertos = accuracy_score(y_teste, previsoes)
 acertos_percentual = round(acertos * 100)
 
 print(f"O modelo acertou {acertos_percentual}% das viaturas de teste")
+
+
+## Passo 7 - Cria viatura de teste
+
+#dados da viatura
+km_novo = 95000
+idade_novo = 8
+manutencao_novo = 4
+
+viatura_nova = pd.DataFrame({
+    "km_rodado": [km_novo],
+    "idade_anos": [idade_novo],
+    "qtd_manutencoes_anteriores": [manutencao_novo]
+})
+
+viatura_nova = viatura_nova[colunas_entradas]
+resultado = modelo.predict(viatura_nova)[0]
+
+if resultado == 1:
+  print("O Modelo Preve manutenção")
+else:
+  print("O Modelo não preve manutenção")
