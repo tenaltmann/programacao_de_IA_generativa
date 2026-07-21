@@ -60,3 +60,13 @@ modelo = DecisionTreeClassifier(max_depth=4, random_state=42)
 #.fit é o momento do treinamento de verdade
 modelo.fit(x_treino, y_treino)
 print("modelo Treinado")
+
+
+## Passo 6 - Verifica se o modelo aprendeu corretamente
+previsoes = modelo.predict(x_teste)
+
+#comparando as respostas do modelo com as respostas certas
+acertos = accuracy_score(y_teste, previsoes)
+acertos_percentual = round(acertos * 100)
+
+print(f"O modelo acertou {acertos_percentual}% das viaturas de teste")
