@@ -61,3 +61,25 @@ perfil = df.groupby("grupos_encontrados")[colunas_sem_resposta].mean().round(1)
 print("Perfil médio de cada grupo: ")
 print()
 print(perfil.to_string())
+
+
+
+## Passo 7 - Visualizar os grupos por graficos 
+
+from pandas.io.formats.style_render import Subset
+
+cores = ["#2B5C82","#C99A3B"]
+
+plt.figure(figsize=(9,5))
+
+
+for g in [0, 1]:
+  subset = df[df['grupos_encontrados'] == g]
+  plt.scatter(subset["km_rodado"], subset["idade_anos"],
+              c=cores[g], label="Grupo" + str(g), s=70, alpha=0.7)
+
+  plt.xlabel("km rodado")
+  plt.ylabel("idade (anos)")
+  plt.title("Grupos encontrados pelo computador(não supervisionado)")
+  plt.legend()
+  plt.show()
