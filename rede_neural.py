@@ -175,3 +175,28 @@ ax2.set_ylim(0, 1.05)
 ax1.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
+
+
+## Passo 7 - Testando comnovas frases
+
+frases_teste = [
+    "preciso de gasolina para o caminhão",
+    "a torneira do banheiro está vazando",
+    "solicito folga na próxima semana",
+    "estamos sem material de escritório",
+    "o portão eletrônico não abre",
+]
+
+# Preparar (mesmo processo do treino)
+seq_teste = tokenizer.texts_to_sequences(frases_teste)
+x_teste = pad_sequences(seq_teste, maxlen=10, padding='pre')
+
+# Classificar
+predicoes = modelo.predict(x_teste, verbose=0)
+nomes_tipos = ["MATERIAL", "MANUTENÇÃO", "LICENÇA"]
+for i, frase in enumerate(frases_teste):
+    tipo = np.argmax(predicoes[i])
+    conf = predicoes[i][tipo] * 100
+    print(f'"{frase}"')
+    print(f'{nomes_tipos[tipo]} ({conf:.0f}% confiança)')
+    print()
