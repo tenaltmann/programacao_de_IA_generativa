@@ -47,3 +47,7 @@ modelo.compile(
     metrics=['accuracy']
 )
 modelo.fit(entrada_treino, saida_treino, epochs=15, batch_size=512, validation_split=0.2, verbose=1)
+
+
+erro,acuracia = modelo.evaluate(entrada_teste, saida_teste)
+print(f"\n Acurácia:  {acuracia:.2%}")
