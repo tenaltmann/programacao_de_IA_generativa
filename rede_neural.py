@@ -6,6 +6,8 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 print("TensorFlow versão:", tf.__version__)
 
 
@@ -143,3 +145,33 @@ modelo.compile(
 print("Modelo Compilado")
 
 
+## Passo 5 - Treinando a rede
+
+    # model.fit() treina a rede, Cada Epoch = uma rodada completa
+          # - loss (taxa de erro) que deve cair
+          # - accurancy (taxa de acertos) deve subir
+
+historico = modelo.fit(x_treino, y_treino,epochs=50, verbose=1)
+
+print(f"\nLoss final: {historico.history['loss'][-1]:.4f}")
+print(f"\nAccurancy final: {historico.history['accuracy'][-1]*100:.1f}%")
+
+
+
+## Passo 6 - Visualizar o aprendizado
+
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12,4))
+
+ax1.plot(historico.history['loss'], color='orange', linewidth=2)
+ax1.set_title("loss (erro) - deve CAIR")
+ax1.set_label('Epoch')
+ax1.grid(True, alpha=0.3)
+
+ax2.plot(historico.history['accuracy'], color="green", linewidth=2)
+ax2.set_title("accuracy (acertos) - deve SUBIR")
+ax2.set_label('Epoch')
+ax2.set_ylim(0, 1.05)
+ax1.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
