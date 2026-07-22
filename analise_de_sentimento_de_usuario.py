@@ -51,3 +51,16 @@ modelo.fit(entrada_treino, saida_treino, epochs=15, batch_size=512, validation_s
 
 erro,acuracia = modelo.evaluate(entrada_teste, saida_teste)
 print(f"\n Acurácia:  {acuracia:.2%}")
+
+
+
+## Passo 7 - desenvolvimento do ChatBot
+
+dicionario= imdb.get_word_index()
+tradutor = GoogleTranslator(source='pt', target='en')
+
+def preparar(texto_pt):
+  texto_en = tradutor.translate(texto_pt)
+  limpo = re.sub(r'[^a-z\s]', ' ', texto_en.lower())
+  sequencia = [dicionario.get(p, 0) + 3 for p in limpo.split() if dicionario.get(p, 0) + 3 < NUM_PALAVRAS]
+  return pad_sequences([sequencia], maxlen=TAMANHO_MAXIMO), texto_en
