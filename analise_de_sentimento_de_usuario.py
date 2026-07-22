@@ -6,6 +6,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.datasets import imdb
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from deep_translator import GoogleTranslator
+import re
 
 print("bibliotecas carrecagas")
 
@@ -64,3 +65,39 @@ def preparar(texto_pt):
   limpo = re.sub(r'[^a-z\s]', ' ', texto_en.lower())
   sequencia = [dicionario.get(p, 0) + 3 for p in limpo.split() if dicionario.get(p, 0) + 3 < NUM_PALAVRAS]
   return pad_sequences([sequencia], maxlen=TAMANHO_MAXIMO), texto_en
+
+
+
+  ## Passo 8 - O meu ChatBot
+
+
+## Passo 8 - O meu ChatBot
+
+
+print("\n" + "=" * 50)
+print("CHATBOT ANALISADOR DE SENTIMENTOS")
+print("=" * 50)
+
+while True:
+  texto = input('Você: ')
+  if texto.lower() in ["sair", "exit", "quit" ]:
+    print("\n Até a proxima!")
+    break
+  if not texto.strip():
+    print("Digite algo! \n")
+    continue
+
+  entrada, en = preparar(texto)
+  probabilidade = modelo.predict(entrada, verbose=0)[0][0]
+  print(f'\nTradução: \"{en}\"')
+  if probabilidade>= 0.7:
+    print(f'POSITIVA({probabilidade:.1%}) - Gostou Bastante')
+  elif probabilidade>= 0.5:
+    print(f'LEVEMENTE POSITIVA({probabilidade:.1%}) - Gostou, com ressalvas.')
+  elif probabilidade>= 0.3:
+    print(f'LEVEMENTE NEGATIVA({probabilidade:.1%}) - Não curtiu muito.')
+  else:
+    print(f'NEGATIVA({probabilidade:.1%}) - Não Gostou')
+
+
+
