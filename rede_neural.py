@@ -114,6 +114,32 @@ print(f'\nFormato: {x_treino.shape} → {x_treino.shape[0]} frases de {x_treino.
 
 
 
+## Passo 4 - Montar a rede Neural
 
+    # Vamos empilhar 4 camadas com sequencia
+
+tamanho_vocabulario = len(tokenizer.word_index) + 1
+
+
+modelo = keras.Sequential([
+    keras.layers.Embedding(tamanho_vocabulario, 16, input_length=10),
+    keras.layers.GlobalAveragePooling1D(),
+    keras.layers.Dense(16, activation='relu'),
+    keras.layers.Dense(3, activation='softmax')    
+])
+
+modelo.summary()
+
+
+
+  # Compilar = preparar para testar
+
+modelo.compile(
+    loss='sparse_categorical_crossentropy',   # é o medidor de erros. O sparse é o rotulo
+    optimizer='adam',                         # é o algoritmo inteligente que vai no modelo e ajusta
+    metrics=['accurancy']                     # o placar mostra a  porcentagem de acertos e erros
+)
+
+print("Modelo Compilado")
 
 
