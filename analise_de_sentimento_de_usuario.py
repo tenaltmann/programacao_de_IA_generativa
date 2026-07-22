@@ -8,3 +8,11 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from deep_translator import GoogleTranslator
 
 print("bibliotecas carrecagas")
+
+
+## Passo 3 - Configurações
+
+NUM_PALAVRAS = 10000
+TAMANHO_MAXIMO = 200
+
+
