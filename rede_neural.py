@@ -199,4 +199,24 @@ for i, frase in enumerate(frases_teste):
     conf = predicoes[i][tipo] * 100
     print(f'"{frase}"')
     print(f'{nomes_tipos[tipo]} ({conf:.0f}% confiança)')
-    print()
+    
+
+
+
+# Passo 8 - testando com frase geradas aleatoriamente
+
+# MUDE ESTAS FRASES
+minhas_frases = [
+    "preciso de mais folhas",
+    "gostaria de tirar ferias em abril",
+    "mais uma frase aqui",
+]
+
+seq = tokenizer.texts_to_sequences(minhas_frases)
+X = pad_sequences(seq, maxlen=10, padding='pre')
+pred = modelo.predict(X, verbose=0)
+
+for i, frase in enumerate(minhas_frases):
+    tipo = np.argmax(pred[i])
+    conf = pred[i][tipo] * 100
+    print(f'"{frase}" → {nomes_tipos[tipo]} ({conf:.0f}%)')
