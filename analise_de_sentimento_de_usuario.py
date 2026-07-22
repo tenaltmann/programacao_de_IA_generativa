@@ -36,3 +36,14 @@ modelo = keras.Sequential([
     layers.Dense(1, activation='sigmoid')
 ])
 modelo.summary()
+
+
+## Passo 6 - Compilar e treinar
+
+
+modelo.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+modelo.fit(entrada_treino, saida_treino, epochs=15, batch_size=512, validation_split=0.2, verbose=1)
