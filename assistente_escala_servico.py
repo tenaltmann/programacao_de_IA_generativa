@@ -201,3 +201,66 @@ for msg in mensagens_teste:
 
 
 
+## Passo 9 Montando o assitente completo
+
+
+def gerar_resposta(intencao, entidades, sentimento):
+    respostas = {
+        'TROCA_SERVICO': 'Pedido de troca registrado. Vou verificar a disponibilidade e retorno em breve.',
+        'CONSULTA_ESCALA': 'Consultando a escala de serviço... Sua próxima escala está prevista para os dias indicados no quadro de serviço.',
+        'RECLAMACAO': 'Sua reclamação foi registrada e será encaminhada ao responsável pela escala para análise.',
+        'CONFIRMACAO': 'Presença confirmada com sucesso. Obrigado pela confirmação.',
+        'SAUDACAO': 'Bom dia! Sou o assistente de escala de serviço. Como posso ajudar?',
+        'NAO_IDENTIFICADO': 'Não entendi sua solicitação. Pode reformular? Posso ajudar com consultas, trocas e confirmações de escala.'
+    }
+
+
+    resposta = respostas.get(intencao, respostas['NÃO IDENTIFICADO'])
+
+    # Personalizar se tivermos entidades
+    if entidades['nomes']:
+        resposta += f'\n   Militar(es) envolvido(s): {", ".join(entidades["nomes"])}'
+    if entidades['datas']:
+        resposta += f'\n   Data(s) mencionada(s): {", ".join(entidades["datas"])}'
+    if entidades['unidades']:
+        resposta += f'\n   Unidade: {", ".join(entidades["unidades"])}'
+
+
+     #Alerta se sentimento for negativo
+    if sentimento == "NEGATIVO":
+      resposta += "\n Detectei insatisfação - priorizando atendimento"
+    
+    return resposta
+
+def assistente_escala(mensagem):
+    """Pipeline completo do assistente de escala de serviço."""
+    print(f' Mensagem: "{mensagem}"')
+    print('-' * 60)
+
+    # 1. Análise de sentimento
+    scores = sia.polarity_scores(mensagem)
+    if scores['compound'] >= 0.05:
+        sentimento = 'POSITIVO'
+    elif scores['compound'] <= -0.05:
+        sentimento = 'NEGATIVO'
+    else:
+        sentimento = 'NEUTRO'
+    print(f'   Sentimento: {sentimento} ({scores["compound"]:.2f})')
+
+    # 2. Classificar intenção
+    intencao = classificar_intencao(mensagem)
+    print(f'   Intenção: {intencao}')
+
+    # 3. Extrair entidades
+    entidades = extrair_entidades_militar(mensagem)
+    for tipo, valores in entidades.items():
+        if valores:
+            print(f'   {tipo}: {valores}')
+
+    # 4. Gerar resposta
+    resposta = gerar_resposta(intencao, entidades, sentimento)
+    print(f'\n Resposta:')
+    print(f'  {resposta}')
+    print()
+    return resposta
+
