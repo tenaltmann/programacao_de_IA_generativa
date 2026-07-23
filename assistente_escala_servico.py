@@ -42,3 +42,14 @@ print("TOKEN" .ljust(20), "CLASSE GRAMATICAL")
 print("-" * 40)
 for token in doc:
   print(f'{token.text.ljust(20)} {token.pos_}')
+
+
+## Passo 4 - Filtra o STopwords
+
+palavras_uteis = [token.text for token in doc if not token.is_stop and not token.is_punct]
+
+print("Frase Original: ")
+print(f" '{texto}'")
+print()
+print("Palavras úteis (sem stopwords): ")
+print(f"{palavras_uteis}")
