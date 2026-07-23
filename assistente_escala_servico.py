@@ -278,8 +278,8 @@ for msg in mensagens:
     print('=' * 60)
 
 
-    ## Passo 11 - Modo interativo
-
+    
+## Passo 11 - Modo interativo
 print("ASSISTENTE DE ESCALA DE SERVIÇO")
 print('(digite "sair" para encerrar)')
 print("=" * 60)
