@@ -104,3 +104,52 @@ if doc.ents:
     print(f" {ent.text.ljust(25)} - {ent.label} ({spacy.explain(ent.label_)})")
 else:
   print("Nennhuma entidade detectada pelo modelo.")
+
+
+
+  ## Passo 7 - definindo entidades customizadas dom uma função
+
+def extrair_entidades_militares(texto):
+  entidades = {
+      "postos":[],
+      "nomes": [],
+      "datas": [],
+      "unidades": []
+  }
+
+  # Postos e graduações
+  postos = ['Soldado', 'Cabo', 'Sargento', 'Terceiro-Sargento', 'Segundo-Sargento',
+            'Primeiro-Sargento', 'Subtenente', 'Tenente', 'Capitão', 'Major',
+            'Coronel', 'General']
+  
+  for posto in postos:
+    # Buscar o posto seguido de um nome próprio
+    padrao = rf'{posto}\s+([A-Z][a-záéíóú]+)'
+    matches = re.findall(padrao, texto)
+    for nome in matches:
+      entidades['postos'].append(posto)
+      entidades['nomes'].append(f"{posto} {nome}")
+  
+  # Datas
+    dias_semana = re.findall(r'(segunda|terça|quarta|quinta|sexta|sábado|domingo)(?:-feira)?', texto, re.IGNORECASE)
+    entidades['datas'].extend(dias_semana)
+
+    datas_num = re.findall(r'dia\s+(\d{1,2}(?:\s+de\s+\w+)?)', texto, re.IGNORECASE)
+    entidades['datas'].extend(datas_num)
+
+    # Unidades militares
+    unidades = re.findall(r'\d+[ºª]\s*\w+', texto)
+    entidades['unidades'].extend(unidades)
+
+    return entidades
+
+#Teste 
+
+msg = "O Sargento oliveira precisa trocar o serviço do dia 20 de agosto com o Cabo Ferreira do 4° BIL"
+resultado = extrair_entidades_militares(msg)
+
+print(f"Mensagem: {msg}")
+print()
+for tipo, valores in resultado.items():
+  if valores:
+    print(f'{tipo.upper()}: {valores}')
