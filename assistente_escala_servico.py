@@ -83,3 +83,24 @@ for frase in frases:
   print(f"\n'{frase}'")
   print(f"{sentimento} (score: {scores['compound']:.2f})")
 
+
+
+
+## Passo 6 - Estração das entidades
+
+#Mensagem com várias entidades
+mensagem = "O Sargento oliveira precisa trocar o serviço do dia 20 de agosto com o Cabo Ferreira do 4° BIL"
+
+
+doc = nlp(mensagem)
+
+print(f"mensagem: {mensagem}")
+print()
+print("ENTIDADES ENCONTRADAS: ")
+print("-" * 40)
+
+if doc.ents:
+  for ent in doc.ents:
+    print(f" {ent.text.ljust(25)} - {ent.label} ({spacy.explain(ent.label_)})")
+else:
+  print("Nennhuma entidade detectada pelo modelo.")
