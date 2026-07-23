@@ -260,3 +260,19 @@ def assistente_escala(mensagem):
     print(f'  {resposta}')
     print()
     return resposta
+
+    ## Passo 10 - Tetando o assitente
+
+mensagens = [
+    'Bom dia, preciso consultar a escala de serviço desta semana',
+    'Solicito troca de serviço de quinta com o Cabo Ferreira do 2º BIL',
+    'Estou insatisfeito com a escala, é um absurdo ter 3 serviços seguidos',
+    'Confirmo presença no serviço de sábado',
+    'O Sargento Ribeiro pode assumir meu serviço de terça?',
+]
+
+print(' ASSISTENTE DE ESCALA DE SERVIÇO')
+print('=' * 60)
+for msg in mensagens:
+    assistente_escala(msg)
+    print('=' * 60)
