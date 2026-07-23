@@ -153,3 +153,53 @@ print()
 for tipo, valores in resultado.items():
   if valores:
     print(f'{tipo.upper()}: {valores}')
+
+
+
+
+## Passo 8 - Reconhecimento de Intenção
+
+
+def classificar_intencao(texto):
+    """Classifica a intenção da mensagem usando palavras-chave."""
+    texto_lower = texto.lower()
+
+    # Dicionário de intenções e suas palavras-chave
+    intencoes = {
+        'TROCA_SERVICO': ['trocar', 'troca', 'permuta', 'permutar', 'substituir', 'substituição'],
+        'CONSULTA_ESCALA': ['consultar', 'consulta', 'ver', 'qual', 'quando', 'horário', 'escala', 'minha escala'],
+        'RECLAMACAO': ['absurdo', 'injusto', 'insatisfeito', 'reclamar', 'reclamação', 'problema', 'errado'],
+        'CONFIRMACAO': ['confirmo', 'confirmar', 'presente', 'estarei', 'ok', 'ciente', 'afirmativo'],
+        'SAUDACAO': ['bom dia', 'boa tarde', 'boa noite', 'olá', 'oi'],
+    }
+
+    # Verificar cada intenção
+    scores = {}
+    for intencao, palavras in intencoes.items():
+        score = sum(1 for p in palavras if p in texto_lower)
+        if score > 0:
+            scores[intencao] = score
+
+    if scores:
+        return max(scores, key=scores.get)
+    return 'NAO_IDENTIFICADO'
+
+# Testar com várias mensagens
+mensagens_teste = [
+    'Quero trocar minha escala de quarta com o Soldado Lima',
+    'Quando é meu próximo serviço?',
+    'É um absurdo essa escala injusta',
+    'Confirmo presença no serviço de sexta-feira',
+    'Bom dia, tudo bem?',
+    'Preciso ver a escala do mês que vem',
+]
+
+print('RECONHECIMENTO DE INTENÇÃO')
+print('=' * 60)
+for msg in mensagens_teste:
+    intencao = classificar_intencao(msg)
+    print(f'\n"{msg}"')
+    print(f'  → Intenção: {intencao}')
+
+
+
