@@ -201,8 +201,7 @@ for msg in mensagens_teste:
 
 
 
-## Passo 9 Montando o assitente completo
-
+# Passo 9 - Montando o assitente completo
 
 def gerar_resposta(intencao, entidades, sentimento):
     respostas = {
@@ -213,11 +212,9 @@ def gerar_resposta(intencao, entidades, sentimento):
         'SAUDACAO': 'Bom dia! Sou o assistente de escala de serviço. Como posso ajudar?',
         'NAO_IDENTIFICADO': 'Não entendi sua solicitação. Pode reformular? Posso ajudar com consultas, trocas e confirmações de escala.'
     }
+    resposta = respostas.get(intencao, respostas['NAO_IDENTIFICADO'])
 
-
-    resposta = respostas.get(intencao, respostas['NÃO IDENTIFICADO'])
-
-    # Personalizar se tivermos entidades
+    # Personalizar se temos entidades
     if entidades['nomes']:
         resposta += f'\n   Militar(es) envolvido(s): {", ".join(entidades["nomes"])}'
     if entidades['datas']:
@@ -225,12 +222,12 @@ def gerar_resposta(intencao, entidades, sentimento):
     if entidades['unidades']:
         resposta += f'\n   Unidade: {", ".join(entidades["unidades"])}'
 
-
-     #Alerta se sentimento for negativo
+    #Alerta se sentimento for negativo
     if sentimento == "NEGATIVO":
       resposta += "\n Detectei insatisfação - priorizando atendimento"
     
     return resposta
+
 
 def assistente_escala(mensagem):
     """Pipeline completo do assistente de escala de serviço."""
@@ -263,4 +260,3 @@ def assistente_escala(mensagem):
     print(f'  {resposta}')
     print()
     return resposta
-
