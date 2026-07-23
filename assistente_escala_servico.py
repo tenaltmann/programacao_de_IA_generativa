@@ -107,30 +107,30 @@ else:
 
 
 
-  ## Passo 7 - definindo entidades customizadas dom uma função
+# Passo 7 - Extrair Entidades
 
-def extrair_entidades_militares(texto):
-  entidades = {
-      "postos":[],
-      "nomes": [],
-      "datas": [],
-      "unidades": []
-  }
+def extrair_entidades_militar(texto):
+    """Extrai entidades relevantes para o contexto militar usando regras."""
+    entidades = {
+        'postos': [],
+        'nomes': [],
+        'datas': [],
+        'unidades': []
+    }
 
-  # Postos e graduações
-  postos = ['Soldado', 'Cabo', 'Sargento', 'Terceiro-Sargento', 'Segundo-Sargento',
-            'Primeiro-Sargento', 'Subtenente', 'Tenente', 'Capitão', 'Major',
-            'Coronel', 'General']
-  
-  for posto in postos:
-    # Buscar o posto seguido de um nome próprio
-    padrao = rf'{posto}\s+([A-Z][a-záéíóú]+)'
-    matches = re.findall(padrao, texto)
-    for nome in matches:
-      entidades['postos'].append(posto)
-      entidades['nomes'].append(f"{posto} {nome}")
-  
-  # Datas
+    # Postos e graduações
+    postos = ['Soldado', 'Cabo', 'Sargento', 'Terceiro-Sargento', 'Segundo-Sargento',
+              'Primeiro-Sargento', 'Subtenente', 'Tenente', 'Capitão', 'Major',
+              'Coronel', 'General']
+    for posto in postos:
+        # Busca o posto seguido de um nome próprio (palavra começando com maiúscula)
+        padrao = rf'{posto}\s+([A-Z][a-záéíóú]+)'
+        matches = re.findall(padrao, texto)
+        for nome in matches:
+            entidades['postos'].append(posto)
+            entidades['nomes'].append(f'{posto} {nome}')
+
+    # Datas
     dias_semana = re.findall(r'(segunda|terça|quarta|quinta|sexta|sábado|domingo)(?:-feira)?', texto, re.IGNORECASE)
     entidades['datas'].extend(dias_semana)
 
@@ -143,17 +143,15 @@ def extrair_entidades_militares(texto):
 
     return entidades
 
-#Teste 
+# Testar
+msg = 'O Sargento Oliveira precisa trocar o serviço de quarta com o Cabo Ferreira do 3º BIL'
+resultado = extrair_entidades_militar(msg)
 
-msg = "O Sargento oliveira precisa trocar o serviço do dia 20 de agosto com o Cabo Ferreira do 4° BIL"
-resultado = extrair_entidades_militares(msg)
-
-print(f"Mensagem: {msg}")
+print(f'Mensagem: "{msg}"')
 print()
 for tipo, valores in resultado.items():
-  if valores:
-    print(f'{tipo.upper()}: {valores}')
-
+    if valores:
+        print(f'  {tipo.upper()}: {valores}')
 
 
 
