@@ -276,3 +276,18 @@ print('=' * 60)
 for msg in mensagens:
     assistente_escala(msg)
     print('=' * 60)
+
+
+    ## Passo 11 - Modo interativo
+
+print("ASSISTENTE DE ESCALA DE SERVIÇO")
+print('(digite "sair" para encerrar)')
+print("=" * 60)
+
+while True:
+  mensagem = input('\n Sua mensagem: ')
+  if mensagem.lower() in ['sair', 'exit', 'quiet']:
+    print('\n Assitente encerrado. Até a próxima!')
+    break
+  print()
+  assistente_escala(mensagem)
