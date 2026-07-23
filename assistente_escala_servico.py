@@ -27,3 +27,18 @@ sia = SentimentIntensityAnalyzer()
 
 print("Tudo foi carregado com sucesso")
 
+
+
+## Passo 3 - quebrando o texto em pedaços
+
+# Exemplo de mensagem
+texto = "Preciso trocar minha escala de quarta para sexta com o Cabo Abudes"
+
+# o spacy processa o texto inteiro de uma vez
+doc = nlp(texto)
+
+# Vamos ver cada token e sua classe gramatical
+print("TOKEN" .ljust(20), "CLASSE GRAMATICAL")
+print("-" * 40)
+for token in doc:
+  print(f'{token.text.ljust(20)} {token.pos_}')
